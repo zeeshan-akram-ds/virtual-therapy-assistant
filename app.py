@@ -7,18 +7,26 @@ import pandas as pd
 import re
 import random
 from sklearn.metrics.pairwise import cosine_similarity
-
 import os
-import gdown
+import requests
 
-# --- Download FAISS index from Google Drive if not present ---
-FAISS_FILE_ID = "1jUZ9929E6aWMdTJaLU87L2ca_4MQG9Si"
-FAISS_DEST = "therapy_faiss.index"
+# URLs of your files on HuggingFace
+faiss_url = "https://huggingface.co/datasets/Zeeshan7866/therapy-chatbot-files/resolve/main/therapy_faiss.index"
+responses_url = "https://huggingface.co/datasets/Zeeshan7866/therapy-chatbot-files/resolve/main/therapist_responses.pkl"
 
-if not os.path.exists(FAISS_DEST):
-    print("Downloading FAISS index from Google Drive...")
-    url = f"https://drive.google.com/uc?id={FAISS_FILE_ID}"
-    gdown.download(url, FAISS_DEST, quiet=False)
+# Download therapy_faiss.index if not already downloaded
+if not os.path.exists("therapy_faiss.index"):
+    print("Downloading therapy_faiss.index...")
+    r = requests.get(faiss_url)
+    with open("therapy_faiss.index", "wb") as f:
+        f.write(r.content)
+
+# Download therapist_responses.pkl if not already downloaded
+if not os.path.exists("therapist_responses.pkl"):
+    print("Downloading therapist_responses.pkl...")
+    r = requests.get(responses_url)
+    with open("therapist_responses.pkl", "wb") as f:
+        f.write(r.content)
 # --- Streamlit Setup ---
 st.set_page_config(
     page_title="AI Virtual Therapist (Demo)",
