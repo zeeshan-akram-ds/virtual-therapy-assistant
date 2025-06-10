@@ -1,3 +1,13 @@
+import streamlit as st
+from sentence_transformers import SentenceTransformer
+import faiss
+import numpy as np
+import pickle
+import pandas as pd
+import re
+import random
+from sklearn.metrics.pairwise import cosine_similarity
+
 import os
 import gdown
 
@@ -9,16 +19,6 @@ if not os.path.exists(FAISS_DEST):
     print("Downloading FAISS index from Google Drive...")
     url = f"https://drive.google.com/uc?id={FAISS_FILE_ID}"
     gdown.download(url, FAISS_DEST, quiet=False)
-import streamlit as st
-from sentence_transformers import SentenceTransformer
-import faiss
-import numpy as np
-import pickle
-import pandas as pd
-import re
-import random
-from sklearn.metrics.pairwise import cosine_similarity
-
 # --- Streamlit Setup ---
 st.set_page_config(
     page_title="AI Virtual Therapist (Demo)",
