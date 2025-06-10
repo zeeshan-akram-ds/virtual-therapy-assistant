@@ -1,3 +1,14 @@
+import os
+import gdown
+
+# --- Download FAISS index from Google Drive if not present ---
+FAISS_FILE_ID = "1jUZ9929E6aWMdTJaLU87L2ca_4MQG9Si"
+FAISS_DEST = "therapy_faiss.index"
+
+if not os.path.exists(FAISS_DEST):
+    print("Downloading FAISS index from Google Drive...")
+    url = f"https://drive.google.com/uc?id={FAISS_FILE_ID}"
+    gdown.download(url, FAISS_DEST, quiet=False)
 import streamlit as st
 from sentence_transformers import SentenceTransformer
 import faiss
